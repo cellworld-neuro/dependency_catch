@@ -1,0 +1,4 @@
+/usr/local/lib/libcatch.a
+/usr/local/include/catch.h
+/usr/local/share/cmake/Catch/CatchConfig.cmake
+/usr/local/share/cmake/Catch/CatchConfig-noconfig.cmake

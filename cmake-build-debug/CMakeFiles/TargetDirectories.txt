@@ -1,0 +1,3 @@
+/home/cs211/catch/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/cs211/catch/cmake-build-debug/CMakeFiles/catch.dir
+/home/cs211/catch/cmake-build-debug/CMakeFiles/edit_cache.dir
