@@ -1,7 +1,0 @@
-/home/cs211/catch/build/CMakeFiles/install/strip.dir
-/home/cs211/catch/build/CMakeFiles/edit_cache.dir
-/home/cs211/catch/build/CMakeFiles/catch.dir
-/home/cs211/catch/build/CMakeFiles/rebuild_cache.dir
-/home/cs211/catch/build/CMakeFiles/list_install_components.dir
-/home/cs211/catch/build/CMakeFiles/install/local.dir
-/home/cs211/catch/build/CMakeFiles/install.dir
