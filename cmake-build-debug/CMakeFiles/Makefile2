@@ -6,6 +6,16 @@ default_target: all
 
 .PHONY : default_target
 
+# The main recursive all target
+all:
+
+.PHONY : all
+
+# The main recursive preinstall target
+preinstall:
+
+.PHONY : preinstall
+
 #=============================================================================
 # Special targets provided by cmake.
 
@@ -35,64 +45,59 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2019.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /usr/local/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2019.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /usr/local/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cs211/catch
+CMAKE_SOURCE_DIR = /home/german/zumobot/catch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cs211/catch/cmake-build-debug
+CMAKE_BINARY_DIR = /home/german/zumobot/catch/cmake-build-debug
 
 #=============================================================================
 # Directory level rules for the build root directory
 
-# The main recursive "all" target.
-all: CMakeFiles/catch.dir/all
-
-.PHONY : all
-
 # The main recursive "clean" target.
-clean: CMakeFiles/catch.dir/clean
+clean: CMakeFiles/catchtests.dir/clean
 
 .PHONY : clean
 
-# The main recursive "preinstall" target.
-preinstall:
-
-.PHONY : preinstall
-
 #=============================================================================
-# Target rules for target CMakeFiles/catch.dir
+# Target rules for target CMakeFiles/catchtests.dir
 
 # All Build rule for target.
-CMakeFiles/catch.dir/all:
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/depend
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cs211/catch/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target catch"
-.PHONY : CMakeFiles/catch.dir/all
+CMakeFiles/catchtests.dir/all:
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/depend
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/german/zumobot/catch/cmake-build-debug/CMakeFiles --progress-num=1,2 "Built target catchtests"
+.PHONY : CMakeFiles/catchtests.dir/all
+
+# Include target in all.
+all: CMakeFiles/catchtests.dir/all
+
+.PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/catch.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cs211/catch/cmake-build-debug/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/catch.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cs211/catch/cmake-build-debug/CMakeFiles 0
-.PHONY : CMakeFiles/catch.dir/rule
+CMakeFiles/catchtests.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/german/zumobot/catch/cmake-build-debug/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/catchtests.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/german/zumobot/catch/cmake-build-debug/CMakeFiles 0
+.PHONY : CMakeFiles/catchtests.dir/rule
 
 # Convenience name for target.
-catch: CMakeFiles/catch.dir/rule
+catchtests: CMakeFiles/catchtests.dir/rule
 
-.PHONY : catch
+.PHONY : catchtests
 
 # clean rule for target.
-CMakeFiles/catch.dir/clean:
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/clean
-.PHONY : CMakeFiles/catch.dir/clean
+CMakeFiles/catchtests.dir/clean:
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/clean
+.PHONY : CMakeFiles/catchtests.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

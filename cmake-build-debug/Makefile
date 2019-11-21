@@ -39,38 +39,51 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2019.2.5/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /usr/local/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2019.2.5/bin/cmake/linux/bin/cmake -E remove -f
+RM = /usr/local/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/cs211/catch
+CMAKE_SOURCE_DIR = /home/german/zumobot/catch
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/cs211/catch/cmake-build-debug
+CMAKE_BINARY_DIR = /home/german/zumobot/catch/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target rebuild_cache
-rebuild_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/clion-2019.2.5/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : rebuild_cache
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/local/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
 
-# Special rule for the target rebuild_cache
-rebuild_cache/fast: rebuild_cache
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/local/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
 
-.PHONY : rebuild_cache/fast
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/local/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/clion-2019.2.5/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/usr/local/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -78,11 +91,44 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target rebuild_cache
+rebuild_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
+	/usr/local/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : rebuild_cache
+
+# Special rule for the target rebuild_cache
+rebuild_cache/fast: rebuild_cache
+
+.PHONY : rebuild_cache/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/local/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
+	/usr/local/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cs211/catch/cmake-build-debug/CMakeFiles /home/cs211/catch/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/german/zumobot/catch/cmake-build-debug/CMakeFiles /home/german/zumobot/catch/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cs211/catch/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/german/zumobot/catch/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,32 +157,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named catch
+# Target rules for targets named catchtests
 
 # Build rule for target.
-catch: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 catch
-.PHONY : catch
+catchtests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 catchtests
+.PHONY : catchtests
 
 # fast build rule for target.
-catch/fast:
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/build
-.PHONY : catch/fast
+catchtests/fast:
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/build
+.PHONY : catchtests/fast
 
-# target to build an object file
-src/catch-main.o:
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/src/catch-main.o
+src/catch-main.o: src/catch-main.cpp.o
+
 .PHONY : src/catch-main.o
 
-# target to preprocess a source file
-src/catch-main.i:
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/src/catch-main.i
+# target to build an object file
+src/catch-main.cpp.o:
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/src/catch-main.cpp.o
+.PHONY : src/catch-main.cpp.o
+
+src/catch-main.i: src/catch-main.cpp.i
+
 .PHONY : src/catch-main.i
 
-# target to generate assembly for a file
-src/catch-main.s:
-	$(MAKE) -f CMakeFiles/catch.dir/build.make CMakeFiles/catch.dir/src/catch-main.s
+# target to preprocess a source file
+src/catch-main.cpp.i:
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/src/catch-main.cpp.i
+.PHONY : src/catch-main.cpp.i
+
+src/catch-main.s: src/catch-main.cpp.s
+
 .PHONY : src/catch-main.s
+
+# target to generate assembly for a file
+src/catch-main.cpp.s:
+	$(MAKE) -f CMakeFiles/catchtests.dir/build.make CMakeFiles/catchtests.dir/src/catch-main.cpp.s
+.PHONY : src/catch-main.cpp.s
 
 # Help Target
 help:
@@ -144,9 +202,13 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... rebuild_cache"
-	@echo "... catch"
+	@echo "... install/strip"
+	@echo "... install/local"
 	@echo "... edit_cache"
+	@echo "... catchtests"
+	@echo "... rebuild_cache"
+	@echo "... install"
+	@echo "... list_install_components"
 	@echo "... src/catch-main.o"
 	@echo "... src/catch-main.i"
 	@echo "... src/catch-main.s"

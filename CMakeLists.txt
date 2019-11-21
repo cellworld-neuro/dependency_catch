@@ -1,24 +1,24 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(catch
+project(catchtests
         VERSION 2019.1.0
         DESCRIPTION "Compact test framework"
         LANGUAGES CXX)
 
-add_library(catch
+add_library(catchtests
         include/catch.h
         src/catch-main.cpp)
 
-set_property(TARGET catch PROPERTY CXX_STANDARD 14)
+set_property(TARGET catchtests PROPERTY CXX_STANDARD 14)
 
-set_property(TARGET catch PROPERTY CXX_STANDARD_REQUIRED On)
+set_property(TARGET catchtests PROPERTY CXX_STANDARD_REQUIRED On)
 
-target_include_directories(catch PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+target_include_directories(catchtests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 if(MSVC)
-    target_compile_options(catch PRIVATE /W4)
+    target_compile_options(catchtests PRIVATE /W4)
 else(MSVC)
-    target_compile_options(catch PRIVATE -Wall -Wextra -pedantic)
+    target_compile_options(catchtests PRIVATE -Wall -Wextra -pedantic)
 endif(MSVC)
 
 ###
@@ -27,15 +27,19 @@ endif(MSVC)
 
 include(GNUInstallDirs)
 
-install(TARGETS catch EXPORT CatchConfig
+install(TARGETS catchtests EXPORT CatchTestsConfig
         ARCHIVE  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY  DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME  DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(EXPORT CatchConfig
-        DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/Catch
+install(EXPORT CatchTestsConfig
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/CatchTests
         EXPORT_LINK_INTERFACE_LIBRARIES )
+file(READ Resources/catchtests.cmake tests_code)
 
-export(TARGETS catch FILE CatchConfig.cmake)
+install(DIRECTORY Resources/ DESTINATION ${CMAKE_INSTALL_DATADIR}/CatchTests)
+
+export(TARGETS catchtests FILE CatchTestsConfig.cmake)
+install(CODE "FILE(APPEND ${CMAKE_INSTALL_FULL_DATADIR}/cmake/CatchTests/CatchTestsConfig.cmake \"include (${CMAKE_INSTALL_FULL_DATADIR}/CatchTests/catchtests.cmake)\n\") ")
