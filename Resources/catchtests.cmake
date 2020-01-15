@@ -7,7 +7,7 @@ file(GLOB ${PROJECT_NAME}_tests_glob
     "catchtests/*.cpp"
 )
 
-add_executable(${PROJECT_NAME}_tests ${${PROJECT_NAME}_tests_glob})
+add_executable(${PROJECT_NAME}_tests ${CMAKE_CURRENT_LIST_DIR}/catchtests.cpp ${${PROJECT_NAME}_tests_glob})
 
 set_target_properties(${PROJECT_NAME}_tests
     PROPERTIES
@@ -20,4 +20,4 @@ add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
 
 add_custom_command(TARGET ${PROJECT_NAME}_tests
     POST_BUILD
-    COMMAND .tests/${PROJECT_NAME}_tests ) # -s)
+    COMMAND .tests/${PROJECT_NAME}_tests )

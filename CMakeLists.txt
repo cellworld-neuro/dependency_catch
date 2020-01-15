@@ -7,7 +7,7 @@ project(catchtests
 
 add_library(catchtests
         include/catch.h
-        src/catch-main.cpp)
+        src/catch-main.cpp Resources/catchtests.cpp)
 
 set_property(TARGET catchtests PROPERTY CXX_STANDARD 14)
 
