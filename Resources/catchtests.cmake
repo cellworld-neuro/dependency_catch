@@ -18,6 +18,9 @@ target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
 
 add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
 
-add_custom_command(TARGET ${PROJECT_NAME}_tests
-    POST_BUILD
-    COMMAND .tests/${PROJECT_NAME}_tests )
+
+if (CMAKE_BUILD_TYPE MATCHES Release)
+    add_custom_command(TARGET ${PROJECT_NAME}_tests
+            POST_BUILD
+            COMMAND .tests/${PROJECT_NAME}_tests )
+endif()
