@@ -1,5 +1,4 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE STRING "Description")
-set(IS_LOADED 1 CACHE STRING "Description")
 
 function (test_library)
     set (libraries ${ARGN})
