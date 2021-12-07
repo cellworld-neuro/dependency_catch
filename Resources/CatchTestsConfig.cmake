@@ -1,10 +1,10 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR})
-message("folder ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_DIR}")
+message("folder ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_FILE}")
 
 function (test_library)
     set (libraries ${ARGN})
 
-    message("folder 1 ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_DIR}")
+    message("folder 1 ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_FILE}")
     message("testing started - -")
 
     file(GLOB ${PROJECT_NAME}_tests_glob
