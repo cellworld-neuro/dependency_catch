@@ -1,4 +1,4 @@
-set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE STRING "Description")
+set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
 
 function (test_library)
     set (libraries ${ARGN})
