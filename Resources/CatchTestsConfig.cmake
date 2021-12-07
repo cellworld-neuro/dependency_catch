@@ -1,13 +1,8 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE STRING "Description")
-message("folder ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_FILE}")
 set(IS_LOADED 1 CACHE STRING "Description")
 
-message("IS LOADED ${IS_LOADED}")
 function (test_library)
     set (libraries ${ARGN})
-
-    message("folder 1 ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_FILE}")
-    message("testing started - -")
 
     file(GLOB ${PROJECT_NAME}_tests_glob
         "catchtests/*.h"
