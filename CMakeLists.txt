@@ -27,6 +27,12 @@ set_property(TARGET catchtests PROPERTY CXX_STANDARD_REQUIRED On)
 
 target_include_directories(catchtests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
+add_custom_command(
+        TARGET catchtests
+        POST_BUILD
+        COMMAND echo "include'(''$$'\{CMAKE_CURRENT_LIST_DIR\}/catchtests.cmake')'" >> ${CMAKE_CURRENT_BINARY_DIR}/CatchTestsConfig.cmake
+)
+
 ###
 ### LIBRARY INSTALLATION
 ###
@@ -50,4 +56,4 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/catchtests.cmake ${CMAKE_CURRENT_BINAR
         DESTINATION ${CMAKE_INSTALL_DATADIR}/CatchTests)
 
 export(TARGETS catchtests FILE CatchTestsConfig.cmake)
-install(CODE "FILE(APPEND ${CMAKE_INSTALL_FULL_DATADIR}/cmake/CatchTests/CatchTestsConfig.cmake \"include (${CMAKE_INSTALL_FULL_DATADIR}/CatchTests/catchtests.cmake)\n\") ")
+#install(CODE "FILE(APPEND ${CMAKE_INSTALL_FULL_DATADIR}/cmake/CatchTests/CatchTestsConfig.cmake \"include (${CMAKE_INSTALL_FULL_DATADIR}/CatchTests/catchtests.cmake)\n\") ")
