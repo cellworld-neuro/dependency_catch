@@ -1,20 +1,24 @@
 enable_testing()
-if (NOT (DISABLE_TESTING MATCHES YES))
-    find_package(Catch CONFIG QUIET)
+
+set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR})
+
+function (test_library)
+    set (libraries ${ARGN})
+
+    message("testing started - -")
 
     file(GLOB ${PROJECT_NAME}_tests_glob
         "catchtests/*.h"
         "catchtests/*.cpp"
     )
 
-    add_executable(${PROJECT_NAME}_tests ${CMAKE_CURRENT_LIST_DIR}/catchtests.cpp ${${PROJECT_NAME}_tests_glob})
+    add_executable(${PROJECT_NAME}_tests ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${${PROJECT_NAME}_tests_glob})
 
     set_target_properties(${PROJECT_NAME}_tests
         PROPERTIES
         RUNTIME_OUTPUT_DIRECTORY ".tests")
 
-    target_link_libraries(${PROJECT_NAME}_tests catchtests)
-    target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
+    target_link_libraries(${PROJECT_NAME}_tests ${libraries})
 
     add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
 
@@ -23,4 +27,4 @@ if (NOT (DISABLE_TESTING MATCHES YES))
                 POST_BUILD
                 COMMAND .tests/${PROJECT_NAME}_tests )
     endif()
-endif()
+endfunction()

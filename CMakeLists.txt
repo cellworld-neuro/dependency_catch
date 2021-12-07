@@ -7,19 +7,25 @@ project(catchtests
 
 add_library(catchtests
         include/catch.h
-        src/catch-main.cpp Resources/catchtests.cpp)
+        src/catch-main.cpp
+        Resources/catchtests.cpp)
 
-set_property(TARGET catchtests PROPERTY CXX_STANDARD 14)
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/include/catch.h
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources/catchtests.cmake
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources/catchtests.cpp
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
+
+
+set_property(TARGET catchtests PROPERTY CXX_STANDARD 20)
 
 set_property(TARGET catchtests PROPERTY CXX_STANDARD_REQUIRED On)
 
 target_include_directories(catchtests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
-
-if(MSVC)
-    target_compile_options(catchtests PRIVATE /W4)
-else(MSVC)
-    target_compile_options(catchtests PRIVATE -Wall -Wextra -pedantic)
-endif(MSVC)
 
 ###
 ### LIBRARY INSTALLATION
@@ -37,9 +43,11 @@ install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 install(EXPORT CatchTestsConfig
         DESTINATION ${CMAKE_INSTALL_DATADIR}/cmake/CatchTests
         EXPORT_LINK_INTERFACE_LIBRARIES )
+
 file(READ Resources/catchtests.cmake tests_code)
 
-install(DIRECTORY Resources/ DESTINATION ${CMAKE_INSTALL_DATADIR}/CatchTests)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/catchtests.cmake ${CMAKE_CURRENT_BINARY_DIR}/catchtests.cpp
+        DESTINATION ${CMAKE_INSTALL_DATADIR}/CatchTests)
 
 export(TARGETS catchtests FILE CatchTestsConfig.cmake)
 install(CODE "FILE(APPEND ${CMAKE_INSTALL_FULL_DATADIR}/cmake/CatchTests/CatchTestsConfig.cmake \"include (${CMAKE_INSTALL_FULL_DATADIR}/CatchTests/catchtests.cmake)\n\") ")

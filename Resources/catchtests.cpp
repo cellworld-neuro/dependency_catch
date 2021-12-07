@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_RUNNER
-#include<catch.h>
+#include <catch.h>
 #include <iostream>
 
 using namespace std;
