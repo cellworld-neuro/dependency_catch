@@ -1,6 +1,8 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR})
 message("folder ${CMAKE_CURRENT_LIST_DIR} - ${CATCH_TEST_FOLDER_SOURCE} - ${CMAKE_CURRENT_LIST_FILE}")
+set(IS_LOADED 1)
 
+message("IS LOADED ${IS_LOADED}")
 function (test_library)
     set (libraries ${ARGN})
 
