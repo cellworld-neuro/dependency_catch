@@ -2,6 +2,10 @@ set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
 
 message("CATCH_TESTS CONFIGURATION - $ENV{CATCH_TESTS} -")
 
+if ("$ENV{CATCH_TESTS}" EQUAL "NO_TESTS")
+    MESSAGE("NO TESTS")
+endif()
+
 function (test_library)
     set (libraries ${ARGN})
 
