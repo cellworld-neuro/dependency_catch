@@ -1,19 +1,21 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
-
-function (test_library)
-    if (NOT ${CATCH_TEST} EQUAL "NO_TEST")
+if (${CATCH_TEST} EQUAL "NO_TEST")
+    function (test_library)
+    endfunction()
+else()
+    function (test_library)
         set (libraries ${ARGN})
 
         file(GLOB ${PROJECT_NAME}_tests_glob
-            "catchtests/*.h"
-            "catchtests/*.cpp"
-        )
+                "catchtests/*.h"
+                "catchtests/*.cpp"
+                )
 
         add_executable(${PROJECT_NAME}_tests ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${${PROJECT_NAME}_tests_glob})
 
         set_target_properties(${PROJECT_NAME}_tests
-            PROPERTIES
-            RUNTIME_OUTPUT_DIRECTORY ".tests")
+                PROPERTIES
+                RUNTIME_OUTPUT_DIRECTORY ".tests")
 
         target_link_libraries(${PROJECT_NAME}_tests ${libraries})
 
@@ -24,5 +26,6 @@ function (test_library)
                     POST_BUILD
                     COMMAND .tests/${PROJECT_NAME}_tests )
         endif()
-    endif()
-endfunction()
+    endfunction()
+
+endif()
