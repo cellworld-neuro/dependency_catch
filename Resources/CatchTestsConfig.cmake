@@ -1,5 +1,5 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
-if (${CATCH_TEST} EQUAL "NO_TEST")
+if ("${CATCH_TEST}" EQUAL "NO_TEST")
     function (test_library)
     endfunction()
 else()
@@ -21,7 +21,7 @@ else()
 
         add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
 
-        if (${CMAKE_BUILD_TYPE} EQUAL "Release")
+        if ("${CMAKE_BUILD_TYPE}" EQUAL "Release")
             add_custom_command(TARGET ${PROJECT_NAME}_tests
                     POST_BUILD
                     COMMAND .tests/${PROJECT_NAME}_tests )
