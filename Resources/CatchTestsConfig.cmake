@@ -1,4 +1,6 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
+
+message("CATCH_TESTS CONFIGURATION - ${CATCH_TEST} -")
 if ("${CATCH_TEST}" EQUAL "NO_TEST")
     function (test_library)
     endfunction()
