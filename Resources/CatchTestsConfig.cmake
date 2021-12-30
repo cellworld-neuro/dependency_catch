@@ -3,7 +3,7 @@ message("ADDING TEST")
 
 if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
     message("NO TEST")
-    message("CATCH_TESTS")
+    message("CATCH_TESTS:${CATCH_TESTS}")
     function (test_library)
     endfunction()
 else()
