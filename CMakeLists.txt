@@ -14,6 +14,7 @@ set_property(TARGET catchtests PROPERTY CXX_STANDARD 14)
 set_property(TARGET catchtests PROPERTY CXX_STANDARD_REQUIRED On)
 
 find_package(Dependencies)
+
 if (Dependencies_FOUND)
     dependency_include(include)
 else()
