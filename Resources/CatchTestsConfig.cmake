@@ -23,7 +23,7 @@ else()
         target_link_libraries(${PROJECT_NAME}_tests ${libraries})
 
         add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
-
+        message("BUILD TYPE :${CMAKE_BUILD_TYPE}")
         if ("${CMAKE_BUILD_TYPE}" EQUAL "Release")
             add_custom_command(TARGET ${PROJECT_NAME}_tests
                     POST_BUILD
