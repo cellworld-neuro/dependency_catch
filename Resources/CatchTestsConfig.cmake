@@ -5,7 +5,6 @@ if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
     endfunction()
 else()
     enable_testing()
-    message("SI TEST")
     function (test_library)
         set (libraries ${ARGN})
 
@@ -23,9 +22,7 @@ else()
         target_link_libraries(${PROJECT_NAME}_tests ${libraries})
 
         add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
-        message("BUILD TYPE :${CMAKE_BUILD_TYPE}")
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
-            message("MUST TEST")
             add_custom_command(TARGET ${PROJECT_NAME}_tests
                     POST_BUILD
                     COMMAND .tests/${PROJECT_NAME}_tests )
