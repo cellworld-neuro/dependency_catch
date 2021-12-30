@@ -1,4 +1,5 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
+message("ADDING TEST")
 
 if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
     function (test_library)
