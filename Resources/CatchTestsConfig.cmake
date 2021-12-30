@@ -25,6 +25,7 @@ else()
         add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
         message("BUILD TYPE :${CMAKE_BUILD_TYPE}")
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
+            message("MUST TEST")
             add_custom_command(TARGET ${PROJECT_NAME}_tests
                     POST_BUILD
                     COMMAND .tests/${PROJECT_NAME}_tests )
