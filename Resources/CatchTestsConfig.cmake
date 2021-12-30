@@ -6,8 +6,8 @@ if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
     function (test_library)
     endfunction()
 else()
+    message("SI TEST")
     function (test_library)
-        message("TESTING LIBRARY")
         set (libraries ${ARGN})
 
         file(GLOB ${PROJECT_NAME}_tests_glob
