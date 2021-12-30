@@ -6,14 +6,20 @@ project(catchtests
         LANGUAGES CXX)
 
 add_library(catchtests
-        include/catch.h
-        src/catch-main.cpp Resources/catchtests.cpp)
+        src/catch-main.cpp
+        Resources/catchtests.cpp)
 
 set_property(TARGET catchtests PROPERTY CXX_STANDARD 14)
 
 set_property(TARGET catchtests PROPERTY CXX_STANDARD_REQUIRED On)
 
-target_include_directories(catchtests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
+find_package(Dependencies)
+if (Dependencies_FOUND)
+    dependency_include(include)
+else()
+    target_include_directories(catchtests include)
+endif()
+
 
 if(MSVC)
     target_compile_options(catchtests PRIVATE /W4)
