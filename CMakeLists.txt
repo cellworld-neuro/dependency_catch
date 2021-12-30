@@ -5,18 +5,21 @@ project(catchtests
         DESCRIPTION "Compact test framework"
         LANGUAGES CXX)
 
-file(COPY Resources/catch.h
+find_package(Dependencies)
+
+if (Dependencies_FOUND)
+    dependency_include(include)
+else()
+    include_directories(include)
+endif()
+
+file(COPY Resources/CatchTestsConfig.cmake
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources/CatchTestsConfig.cmake
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
-
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Resources/catchtests.cpp
+file(COPY Resources/catchtests.cpp
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
 
 set( catchtests_files
-        Resources/catch.h
-        Resources/CatchTestsConfig.cmake
         Resources/catchtests.cpp )
 
 add_custom_target(catchtests SOURCES ${catchtests_files})
