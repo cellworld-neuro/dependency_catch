@@ -16,7 +16,7 @@ else()
         endif()
         string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)
         MATH(EXPR CATCH_TEST_COUNTER_START "4-${COUNTER_LEN}")
-        string(SUBSTRING ${CATCH_TEST_COUNTER} ${CATCH_TEST_COUNTER_START} 4 CATCH_TEST_COUNTER)
+        string(SUBSTRING "0000${CATCH_TEST_COUNTER}" ${CATCH_TEST_COUNTER_START} 4 CATCH_TEST_COUNTER)
         set (test_name ${PROJECT_NAME}_${CATCH_TEST_COUNTER}_tests)
         add_executable(${test_name} ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${tests_files})
 
