@@ -38,7 +38,7 @@ else()
 
     macro(test_files)
         message(STATUS "\nARGN: ${ARGN}\n")
-        foreach(arg IN LISTS ARGN)
+        foreach(arg IN ITEMS ${ARGN})
             message(STATUS "\n ARG : ${arg} \n")
         endforeach()
     endmacro()
