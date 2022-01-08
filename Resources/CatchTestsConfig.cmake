@@ -1,11 +1,11 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
-
+set(CATCH_TEST_COUNTER 0)
 if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
-    function (test_library)
-    endfunction()
+    macro (test_library)
+    endmacro()
 else()
     enable_testing()
-    function (test_library library)
+    macro (test_library library)
         if ("${ARGN}" STREQUAL "")
             file(GLOB tests_files
                     "catchtests/*.h"
@@ -14,19 +14,21 @@ else()
         else()
             set (test_files ${ARGN})
         endif()
-        add_executable(${PROJECT_NAME}_tests ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${tests_files})
+        set (test_name ${PROJECT_NAME}_${CATCH_TEST_COUNTER}_tests)
+        add_executable(${test_name} ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${tests_files})
 
-        set_target_properties(${PROJECT_NAME}_tests
+        set_target_properties(${test_name}
                 PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
 
-        target_link_libraries(${PROJECT_NAME}_tests ${library})
+        target_link_libraries(${test_name} ${library})
 
-        add_test(${PROJECT_NAME}Tests .tests/${PROJECT_NAME}_tests)
+        add_test(${PROJECT_NAME}Tests .tests/${test_name})
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
-            add_custom_command(TARGET ${PROJECT_NAME}_tests
+            add_custom_command(TARGET ${test_name}
                     POST_BUILD
-                    COMMAND .tests/${PROJECT_NAME}_tests )
+                    COMMAND .tests/${test_name} )
         endif()
-    endfunction()
+        MATH(EXPR CATCH_TEST_COUNTER "${CATCH_TEST_COUNTER}+1")
+    endmacro()
 endif()
