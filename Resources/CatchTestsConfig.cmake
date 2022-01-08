@@ -6,7 +6,7 @@ if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
 else()
     enable_testing()
     function (test_library library)
-        if (${ARGN} STREQUAL "")
+        if ("${ARGN}" STREQUAL "")
             file(GLOB tests_files
                     "catchtests/*.h"
                     "catchtests/*.cpp"
