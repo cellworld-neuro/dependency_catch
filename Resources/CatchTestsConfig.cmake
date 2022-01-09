@@ -5,7 +5,7 @@ if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
     endmacro()
 else()
     enable_testing()
-    macro(test_library library)
+    macro(test_library CATCH_TEST_LIBRARIES)
         if ("${ARGN}" STREQUAL "")
             file(GLOB CATCH_TEST_FILES
                     "catchtests/*.h"
@@ -26,7 +26,7 @@ else()
                 PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
 
-        target_link_libraries(${CATCH_TEST_NAME} ${library})
+        target_link_libraries(${CATCH_TEST_NAME} ${CATCH_TEST_LIBRARIES})
 
         add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
@@ -40,16 +40,18 @@ else()
     macro(test_files)
         set(CATCH_TEST_FILES "")
         set(CATCH_TEST_SOURCES "")
+        set(CATCH_TEST_LIBRARIES "")
         set(CATCH_TEST_CURRENT_LIST CATCH_TEST_FILES)
         foreach(arg IN ITEMS ${ARGN})
             if ("${arg}" MATCHES "SOURCES")
                 set(CATCH_TEST_CURRENT_LIST CATCH_TEST_SOURCES)
             elseif("${arg}" MATCHES "TESTS")
                 set(CATCH_TEST_CURRENT_LIST CATCH_TEST_FILES)
+            elseif("${arg}" MATCHES "LIBRARIES")
+                set(CATCH_TEST_CURRENT_LIST CATCH_TEST_LIBRARIES)
             else()
                 list(APPEND ${CATCH_TEST_CURRENT_LIST} ${arg})
             endif()
-            message(STATUS "\n ARG : ${arg} \n")
         endforeach()
         string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)
         MATH(EXPR CATCH_TEST_COUNTER_START "2-${COUNTER_LEN}")
@@ -61,6 +63,8 @@ else()
         set_target_properties(${CATCH_TEST_NAME}
                 PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
+
+        target_link_libraries(${CATCH_TEST_NAME} ${CATCH_TEST_LIBRARIES})
 
         add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
