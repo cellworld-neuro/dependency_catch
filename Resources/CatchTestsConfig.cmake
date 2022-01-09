@@ -58,5 +58,24 @@ else()
         endforeach()
         MESSAGE(STATUS "TESTS: ${CATCH_TEST_FILES}")
         MESSAGE(STATUS "SOURCES: ${CATCH_TEST_SOURCES}")
+
+        string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)
+        MATH(EXPR CATCH_TEST_COUNTER_START "2-${COUNTER_LEN}")
+        string(SUBSTRING "00${CATCH_TEST_COUNTER}" ${CATCH_TEST_COUNTER_START} 2 CATCH_TEST_COUNTER_STR)
+        set (CATCH_TEST_NAME ${PROJECT_NAME}_${CATCH_TEST_COUNTER_STR}_tests)
+
+        add_executable(${CATCH_TEST_NAME} ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${CATCH_TEST_FILES} ${CATCH_TEST_SOURCES})
+
+        set_target_properties(${CATCH_TEST_NAME}
+                PROPERTIES
+                RUNTIME_OUTPUT_DIRECTORY ".tests")
+
+        add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
+        if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
+            add_custom_command(TARGET ${CATCH_TEST_NAME}
+                    POST_BUILD
+                    COMMAND .tests/${CATCH_TEST_NAME} )
+        endif()
+        MATH(EXPR CATCH_TEST_COUNTER "${CATCH_TEST_COUNTER}+1")
     endmacro()
 endif()
