@@ -32,6 +32,7 @@ include(GNUInstallDirs)
 
 install(FILES Resources/catch.h
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
 install(FILES
         Resources/catchtests.cpp
         Resources/CatchTestsConfig.cmake
