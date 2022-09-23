@@ -5,13 +5,21 @@ project(catchtests
         DESCRIPTION "Compact test framework"
         LANGUAGES CXX)
 
-find_package(Dependencies)
+####
+#### DEPENDENCIES
+####
 
-if (Dependencies_FOUND)
-    dependency_include(include)
-else()
-    include_directories(include)
+if (NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/DependenciesConfig.cmake)
+    file(DOWNLOAD https://raw.githubusercontent.com/germanespinosa/dependencies/main/DependenciesConfig.cmake ${CMAKE_CURRENT_SOURCE_DIR}/DependenciesConfig.cmake)
 endif()
+set(Dependencies_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+find_package (Dependencies REQUIRED)
+
+####
+####
+####
+
+dependency_include(include)
 
 file(COPY Resources/CatchTestsConfig.cmake
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
