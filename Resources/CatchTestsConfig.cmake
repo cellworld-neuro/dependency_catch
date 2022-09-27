@@ -1,5 +1,7 @@
+
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
 set(CATCH_TEST_COUNTER 0)
+
 if ("${CATCH_TESTS}" MATCHES "DISABLED")
     macro (test_library)
     endmacro()
@@ -17,7 +19,7 @@ else()
         else()
             set (CATCH_TEST_FILES ${ARGN})
         endif()
-
+        message("string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)")
         string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)
         MATH(EXPR CATCH_TEST_COUNTER_START "2-${COUNTER_LEN}")
         string(SUBSTRING "00${CATCH_TEST_COUNTER}" ${CATCH_TEST_COUNTER_START} 2 CATCH_TEST_COUNTER_STR)
