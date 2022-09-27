@@ -26,7 +26,11 @@ else()
                 PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
 
-        target_link_libraries(${CATCH_TEST_NAME} ${CATCH_TEST_LIBRARIES})
+        foreach(CATCH_TEST_LIBRARY ${CATCH_TEST_LIBRARIES})
+            target_link_libraries(${CATCH_TEST_NAME} ${CATCH_TEST_LIBRARIES})
+            get_target_property(CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES ${CATCH_TEST_LIBRARY} INCLUDE_DIRECTORIES)
+            target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES})
+        endforeach()
 
         add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
