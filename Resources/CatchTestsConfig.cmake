@@ -1,6 +1,6 @@
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
 set(CATCH_TEST_COUNTER 0)
-if ("$ENV{CATCH_TESTS}" MATCHES "NO_TESTS")
+if ("${CATCH_TESTS}" MATCHES "DISABLED")
     macro (test_library)
     endmacro()
 else()
