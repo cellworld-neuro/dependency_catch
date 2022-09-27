@@ -3,6 +3,9 @@ set(CATCH_TEST_COUNTER 0)
 if ("${CATCH_TESTS}" MATCHES "DISABLED")
     macro (test_library)
     endmacro()
+
+    macro(test_files)
+    endmacro()
 else()
     enable_testing()
     macro(test_library CATCH_TEST_LIBRARIES)
@@ -22,8 +25,7 @@ else()
 
         add_executable(${CATCH_TEST_NAME} ${CATCH_TEST_FOLDER_SOURCE}/catchtests.cpp ${CATCH_TEST_FILES})
 
-        message("target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_FOLDER_SOURCE}/include)")
-        target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_FOLDER_SOURCE}/include)
+        target_include_directories(${CATCH_TEST_NAME} PRIVATE include)
 
         set_target_properties(${CATCH_TEST_NAME}
                 PROPERTIES
