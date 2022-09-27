@@ -19,8 +19,6 @@ find_package (Dependencies REQUIRED)
 ####
 ####
 
-include_directories(include)
-
 file(COPY Resources/CatchTestsConfig.cmake
         DESTINATION ${CMAKE_CURRENT_BINARY_DIR} )
 
