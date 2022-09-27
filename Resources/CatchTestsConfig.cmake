@@ -1,9 +1,12 @@
 
 set(CATCH_TEST_FOLDER_SOURCE ${CMAKE_CURRENT_LIST_DIR} CACHE PATH "")
-set(CATCH_TEST_COUNTER 0 PARENT_SCOPE)
 
-
-message("1string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)")
+get_directory_property(CATCH_TEST_HAS_PARENT_SCOPE PARENT_DIRECTORY)
+if(CATCH_TEST_HAS_PARENT_SCOPE)
+    set(CATCH_TEST_COUNTER 0 PARENT_SCOPE)
+else()
+    set(CATCH_TEST_COUNTER 0)
+endif()
 
 if ("${CATCH_TESTS}" MATCHES "DISABLED")
     macro (test_library)
@@ -14,6 +17,7 @@ if ("${CATCH_TESTS}" MATCHES "DISABLED")
 else()
     enable_testing()
     macro(test_library CATCH_TEST_LIBRARIES)
+
         if ("${ARGN}" STREQUAL "")
             file(GLOB CATCH_TEST_FILES
                     "catchtests/*.h"
@@ -22,7 +26,7 @@ else()
         else()
             set (CATCH_TEST_FILES ${ARGN})
         endif()
-        message("string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)")
+
         string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)
         MATH(EXPR CATCH_TEST_COUNTER_START "2-${COUNTER_LEN}")
         string(SUBSTRING "00${CATCH_TEST_COUNTER}" ${CATCH_TEST_COUNTER_START} 2 CATCH_TEST_COUNTER_STR)
