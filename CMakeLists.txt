@@ -49,7 +49,7 @@ else()
             target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES})
             get_target_property(CATCH_TEST_LIBRARY_LINK_LIBRARIES ${CATCH_TEST_LIBRARY} LINK_LIBRARIES)
             message("target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${LINK_LIBRARIES})")
-#            target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_LINK_LIBRARIES})
+            target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_LINK_LIBRARIES})
         endforeach()
 
         add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
