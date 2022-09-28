@@ -43,7 +43,7 @@ else()
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
 
         foreach(CATCH_TEST_LIBRARY ${CATCH_TEST_LIBRARIES})
-            target_link_libraries(${CATCH_TEST_NAME} private ${CATCH_TEST_LIBRARIES})
+            target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARIES})
             get_target_property(CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES ${CATCH_TEST_LIBRARY} INCLUDE_DIRECTORIES)
             message("target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES})")
             target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES})
