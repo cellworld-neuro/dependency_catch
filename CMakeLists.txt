@@ -43,18 +43,6 @@ else()
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
 
         target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARIES})
-#        foreach(CATCH_TEST_LIBRARY ${CATCH_TEST_LIBRARIES})
-#            target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARIES})
-#            get_target_property(CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES ${CATCH_TEST_LIBRARY} INCLUDE_DIRECTORIES)
-#            message("11target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES})")
-#            target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_INCLUDE_DIRECTORIES})
-#            get_target_property(CATCH_TEST_LIBRARY_LINK_LIBRARIES ${CATCH_TEST_LIBRARY} LINK_LIBRARIES)
-#            message("22target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_LINK_LIBRARIES})")
-#            target_link_libraries(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_LINK_LIBRARIES})
-#            get_target_property(CATCH_TEST_LIBRARY_PATH ${CATCH_TEST_LIBRARY} LINK_DIRECTORIES)
-#            message("333target_link_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_PATH})")
-#            target_link_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LIBRARY_PATH})
-#        endforeach()
 
         add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
         if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
@@ -65,44 +53,36 @@ else()
         MATH(EXPR CATCH_TEST_COUNTER "${CATCH_TEST_COUNTER}+1")
     endmacro()
 
-    macro(test_files)
-        set(CATCH_TEST_FILES "")
-        set(CATCH_TEST_SOURCES "")
-        set(CATCH_TEST_LIBRARIES "")
-        set(CATCH_TEST_CURRENT_LIST CATCH_TEST_FILES)
-        foreach(arg IN ITEMS ${ARGN})
-            if ("${arg}" MATCHES "SOURCES")
-                set(CATCH_TEST_CURRENT_LIST CATCH_TEST_SOURCES)
-            elseif("${arg}" MATCHES "TESTS")
-                set(CATCH_TEST_CURRENT_LIST CATCH_TEST_FILES)
-            elseif("${arg}" MATCHES "LIBRARIES")
-                set(CATCH_TEST_CURRENT_LIST CATCH_TEST_LIBRARIES)
-            else()
-                list(APPEND ${CATCH_TEST_CURRENT_LIST} ${arg})
-            endif()
-        endforeach()
-        string(LENGTH ${CATCH_TEST_COUNTER} COUNTER_LEN)
-        MATH(EXPR CATCH_TEST_COUNTER_START "2-${COUNTER_LEN}")
-        string(SUBSTRING "00${CATCH_TEST_COUNTER}" ${CATCH_TEST_COUNTER_START} 2 CATCH_TEST_COUNTER_STR)
-        set (CATCH_TEST_NAME ${PROJECT_NAME}_${CATCH_TEST_COUNTER_STR}_tests)
+    macro(add_catch_test CATCH_TEST_NAME)
 
-        add_executable(${CATCH_TEST_NAME} ${CATCH_TEST_LOCATION}/Resources/catchtests.cpp ${CATCH_TEST_FILES} ${CATCH_TEST_SOURCES})
+        cmake_parse_arguments(CATCH_TEST
+                "AUTO_RUN"
+                "NAME"
+                "TEST_FILES;SOURCE_FILES;LINK_LIBRARIES;INCLUDE_DIRECTORIES"
+                ${ARGN} )
 
+        add_executable(${CATCH_TEST_NAME} ${CATCH_TEST_LOCATION}/Resources/catchtests.cpp ${CATCH_TEST_TEST_FILES} ${CATCH_TEST_SOURCE_FILES})
         target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_LOCATION}/include)
 
         set_target_properties(${CATCH_TEST_NAME}
                 PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY ".tests")
 
-        target_link_libraries(${CATCH_TEST_NAME} ${CATCH_TEST_LIBRARIES})
+        if (NOT "${CATCH_TEST_LINK_LIBRARIES}" STREQUAL "")
+            target_link_libraries(${CATCH_TEST_NAME} ${CATCH_TEST_LINK_LIBRARIES})
+        endif()
+        if (NOT "${CATCH_TEST_INCLUDE_DIRECTORIES}" STREQUAL "")
+            message( "target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_INCLUDE_DIRECTORIES})" )
+            target_include_directories(${CATCH_TEST_NAME} PRIVATE ${CATCH_TEST_INCLUDE_DIRECTORIES})
+        endif()
 
-        add_test(${PROJECT_NAME}Tests .tests/${CATCH_TEST_NAME})
-        if ("${CMAKE_BUILD_TYPE}" MATCHES "Release")
+        add_test(${PROJECT_NAME}_TEST .tests/${CATCH_TEST_NAME})
+
+        if (${CATCH_TEST_AUTO_RUN})
             add_custom_command(TARGET ${CATCH_TEST_NAME}
                     POST_BUILD
-                    COMMAND .tests/${CATCH_TEST_NAME} )
+                    COMMAND .tests/<TARGET_FILE_NAME:${CATCH_TEST_NAME}> )
         endif()
-        MATH(EXPR CATCH_TEST_COUNTER "${CATCH_TEST_COUNTER}+1")
     endmacro()
 endif()
 
